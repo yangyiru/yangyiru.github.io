@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yangyiru.github.io">
   <title>[面试总结之Iframe的跨域问题] | Kamutu Yeung</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….  这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用 首先是要先获取iframe中的window对象 因为有兼容">
+  <meta name="description" content="晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….  这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用">
 <meta name="keywords" content="面试,跨域,iframe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[面试总结之Iframe的跨域问题]">
 <meta property="og:url" content="http://yangyiru.github.io/2017/12/27/面试总结之Iframe的跨域问题/index.html">
 <meta property="og:site_name" content="Kamutu Yeung">
-<meta property="og:description" content="晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….  这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用 首先是要先获取iframe中的window对象 因为有兼容">
+<meta property="og:description" content="晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….  这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-12-27T06:00:34.630Z">
+<meta property="og:updated_time" content="2017-12-27T06:04:29.893Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[面试总结之Iframe的跨域问题]">
-<meta name="twitter:description" content="晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….  这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用 首先是要先获取iframe中的window对象 因为有兼容">
+<meta name="twitter:description" content="晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….  这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用">
   
     <link rel="alternative" href="/atom.xml" title="Kamutu Yeung" type="application/atom+xml">
   
@@ -174,7 +174,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p> 晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….</p>
-<p> 这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用</p>
+<p> 这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用<br> <a id="more"></a></p>
 <h2 id="首先是要先获取iframe中的window对象"><a href="#首先是要先获取iframe中的window对象" class="headerlink" title="首先是要先获取iframe中的window对象"></a>首先是要先获取iframe中的window对象</h2><blockquote>
 <p>因为有兼容问题，一般使用contentWidow属性来获取iframe中的window对象<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src="http://www.demo.com/index.html" id="ifr"&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">// js</span><br><span class="line">var ifrwindow = document.getElementById(<span class="string">'ifr'</span>).contentWindow;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
@@ -480,6 +480,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
@@ -493,10 +497,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">vue报错</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Nodejs</a>
               </li>
              
               <li class="article-tag-list-item">
