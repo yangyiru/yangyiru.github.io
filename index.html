@@ -153,6 +153,146 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-面试总结之Iframe的跨域问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/27/面试总结之Iframe的跨域问题/">[面试总结之Iframe的跨域问题]</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/27/面试总结之Iframe的跨域问题/" class="archive-article-date">
+  	<time datetime="2017-12-26T16:12:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 晚上十点钟的时候，接到了一个电面，因为基础差，还有发挥的问题，导致没有通过。这是我在面试过程中面试官问我的问题中没有答出来，下来之后翻阅资料后整理出来的结果，以此给自己一个警钟和提醒，再次感谢面试官的耐心还有解答，谢谢….</p>
+<p> 这道题涉及到的知识点：iframe同域下Window对象的函数调用，iframe跨域时Window对象的函数调用</p>
+<h2 id="首先是要先获取iframe中的window对象"><a href="#首先是要先获取iframe中的window对象" class="headerlink" title="首先是要先获取iframe中的window对象"></a>首先是要先获取iframe中的window对象</h2><blockquote>
+<p>因为有兼容问题，一般使用contentWidow属性来获取iframe中的window对象<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src="http://www.demo.com/index.html" id="ifr"&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">// js</span><br><span class="line">var ifrwindow = document.getElementById(<span class="string">'ifr'</span>).contentWindow;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="在同域中"><a href="#在同域中" class="headerlink" title="在同域中"></a>在同域中</h2><ul>
+<li><p>在页面中的全局变量和全局函数会挂载到window的属性上 （<a href="http://www.demo.com/index.html这个页面有一个fuc的函数）" target="_blank" rel="noopener">http://www.demo.com/index.html这个页面有一个fuc的函数）</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function fuc() &#123;</span><br><span class="line">  console.log(<span class="string">'55'</span>)</span><br><span class="line">&#125;</span><br><span class="line">// 调用方法一</span><br><span class="line">fuc()</span><br><span class="line">// 调用方法二</span><br><span class="line">window.fuc()</span><br></pre></td></tr></table></figure>
+<h4 id="父调子"><a href="#父调子" class="headerlink" title="父调子"></a>父调子</h4><ul>
+<li><p>可以结合获取iframe的window对象以及函数挂载在window对象上的属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 在同域中调用iframe嵌入进来页面的函数</span><br><span class="line">&lt;iframe src="http://www.demo.com/index.html" id="ifr"&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">// js</span><br><span class="line">var ifrwindow = document.getElementById(<span class="string">'ifr'</span>).contentWindow</span><br><span class="line">ifrwindow.fuc()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="子调父"><a href="#子调父" class="headerlink" title="子调父"></a>子调父</h4><ul>
+<li><p>同父调子一样，iframe内部想调用外部页面的函数，需先获取他的window对象，在js中，使用window.parent,window.top来获取上层页面的window对象</p>
+<ul>
+<li>window.parent 返回父窗口 ，这里指上一层iframe</li>
+<li>window.top 返回顶层窗口，即浏览器窗口</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">      // 这是父页面 index.html</span><br><span class="line">&lt;iframe src="http://www.demo.com/child.html" id="ifr"&gt;&lt;/iframe&gt;</span><br><span class="line">      // 父页面 js</span><br><span class="line">      function father()&#123;</span><br><span class="line">      	console.log(<span class="string">'我是顶层'</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      // 这是父页面下面的第一孩子页面 child.html</span><br><span class="line">      &lt;&lt;iframe id="ifr_child" src="http://www.demo.com/ch_child.html" frameborder="0"&gt;&lt;/iframe&gt;</span><br><span class="line">      // 第一个孩子页面 js</span><br><span class="line">      function child() &#123;</span><br><span class="line">      	console.log(<span class="string">'孩子'</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      // 我是ch_child.html页面</span><br><span class="line">        // 获取 child.html的window对象</span><br><span class="line">        var parent_window = window.parent</span><br><span class="line">        parent_window.child()  // 返回值 为孩子</span><br><span class="line">  // 获取index.html页面的window对象</span><br><span class="line">  var top_window = window.top   //  var top_window = window.parent.parent </span><br><span class="line">  top_window.father() // 返回值 为我是顶层</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="跨域调用"><a href="#跨域调用" class="headerlink" title="跨域调用"></a>跨域调用</h2><ul>
+<li><p>通过修改document.domain来跨子域<br>  现有一个页面，它的地址是www.demo.com/index.html,页面里有一个iframe，它的src是demo.com/index.html,显然现在这个页面和它里面的iframe的地址页面是不同域，用js是获取不到iframe内的东西：</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// www.demo.com 下的inde.html</span><br><span class="line">  function onload() &#123;</span><br><span class="line">    var iframe = document.getElementById(<span class="string">'iframe'</span>)</span><br><span class="line">    var win = iframe.contentWindow // 获取到iframe里面的window对象，但是window对象的属性和方法几乎不可用</span><br><span class="line">    var doc = win.document // 获取不到iframe的document对象</span><br><span class="line">    var name = win.name // 获取不到</span><br><span class="line">  &#125;</span><br><span class="line">&lt;iframe src="http://demo.com/index.html" frameborder="0"&gt;&lt;/iframe&gt;ame</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>document.domain 使用条件 这两个域名必须属于同一个基础域名!而且所用的协议，端口都要一致</p>
+<p>按照上面的demo，<br>先在www.demo.com/index.html和demo.com/index.html的页面中设置相同的基础域名。<br>eg: a.b.example.com中的某些文档页面中可以设置document.domain为b.example.com、example.com、a.b.example.com中的任意一个，但是不能设置c.a.d.example.com,因为这是当前域的子域，也不能设置成baidu.com,因为主域已经不同了</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src="http://demo.com/index.html" id="iframe" onload="test()"&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">	document.domain=<span class="string">"demo.com"</span> // 设置主域</span><br><span class="line">	function test() &#123;</span><br><span class="line">		alert(document.getElemntById(<span class="string">'iframe'</span>).contentWindow)</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>在页面<a href="http://demo.com/index.html中也设置document.domain，必须设置" target="_blank" rel="noopener">http://demo.com/index.html中也设置document.domain，必须设置</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	document.domain=<span class="string">"demo.com"</span> // 设置主域</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>代理页面<br>原理： 这个iframe的src的路径是和获取数据的目标页面处于相同域的页面，这个iframe的页面是可以正常通过ajax来获取你想要的数据，然后再修改document.domain，可以通过js完全控制这个iframe，让iframe去获取数据，我们来控制这个iframe</p>
+</li>
+<li><p>window.name<br>window对象有一个name属性，这个属性有个特征：在一个window的生命周期内，窗口载入的所有页面都是共享一个window.name，每个页面都是有读写的权利。widow.name是持久存在一个窗口载入过的所有页面中的，并不会因为新页面的载入而进行重置</p>
+<ul>
+<li><p>同域下：<br>  eg: 一个页面a.html ，它里面的代码：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">window.name = <span class="string">'我是页面的a设置的值'</span>  // window.name的值</span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">	window.location = <span class="string">'b.html'</span>	</span><br><span class="line">&#125;,<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>b.html 页面的代码
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script&gt;</span><br><span class="line">alert (window.name) // 读取window.name的值</span><br><span class="line"> &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</code></pre></li>
+<li><p>跨域下<br>有一个页面 www.demo.com/a.html，需要通过js来获取另外一个页面 b.demo.com/data.html页面中数据。<br> data.html里的代码</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	window.name = <span class="string">"我是a.html页面的想要的数据，所有可以转化成字符串来传递的数据，都可以放在这里使用，比如json数据"</span></span><br><span class="line">   &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>a.html页面       </p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">      &lt;iframe src="b.demo.com/data.html" id="proxy" style="dispaly:none" onload="getDate()"&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">	function getDate() &#123;</span><br><span class="line">		var iframe = document.getElementById(<span class="string">'proxy'</span>)</span><br><span class="line">		iframe.onload = function()&#123; // 这里的a.html与iframe同源</span><br><span class="line">			var data = iframe.contentWindow.name</span><br><span class="line">			alert(data)</span><br><span class="line">		&#125;</span><br><span class="line">		iframe.src = <span class="string">'about:blank'</span></span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p> 这里的步骤是：<br> 1.在a.html页面中内嵌一个iframe，第一次的src的路径是b.demo.com/data.html；<br> 2.在b.demo.com/data.html的页面里设置了window.name；<br> 3、因为在a.html页面中设置了两次onload，第一次是获取b.demo.com/data.html，然后转发了到与a.html同域的页面中，再在这个页面中获取iframe.contentWindow.name，而这个值是b.demo.com/data.html设置的</p>
+<blockquote>
+<p>补充知识：<br>   about:blank，javascript: 和 data: 中的内容，继承了载入他们的页面的源。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">跨域</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iframe</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/27/面试总结之Iframe的跨域问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-nodejs学习系列一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -841,107 +981,6 @@
 
 
   
-    <article id="post-关于lib-flexible的使用填坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/01/关于lib-flexible的使用填坑/">关于lib-flexible的使用填坑</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/01/关于lib-flexible的使用填坑/" class="archive-article-date">
-  	<time datetime="2017-11-01T06:37:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- > * 整理知识，学习笔记
-> * 发布日记，杂文，所见所想 -->
-<h2 id="什么是-lib-flexible"><a href="#什么是-lib-flexible" class="headerlink" title="什么是 lib-flexible"></a>什么是 lib-flexible</h2><blockquote>
-<ul>
-<li>简介：一个制作H5适配的开源库，可以点击这里下载相关文件，获取需要的JavaScript和CSS文件。</li>
-<li>github地址：<a href="https://github.com/amfe/lib-flexible" target="_blank" rel="noopener">https://github.com/amfe/lib-flexible</a></li>
-<li>阿里CDN地址：<a href="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js" target="_blank" rel="noopener">http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js</a></li></ul></blockquote>
-        
-          <a class="article-more-a" href="/2017/11/01/关于lib-flexible的使用填坑/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">移动端适配</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端日记//" class="article-tag-list-link color5">前端日记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/01/关于lib-flexible的使用填坑/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1051,10 +1090,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Nodejs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">npm</a>
               </li>
              
@@ -1064,6 +1099,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">vue报错</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Nodejs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1092,6 +1131,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">小程序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">跨域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">iframe</a>
               </li>
             
             <div class="clearfix"></div>
