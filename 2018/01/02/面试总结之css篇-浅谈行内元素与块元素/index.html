@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yangyiru.github.io">
-  <title>Archives: 2016/6 | Kamutu Yeung</title>
+  <title>[面试总结之css篇] 浅谈行内元素与块元素 | Kamutu Yeung</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一个基于Github和Hexo的静态Blog,期望以一种简单直接、清晰的写作方式分享自己的心得">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kamutu Yeung">
-<meta property="og:url" content="http://yangyiru.github.io/archives/2016/06/index.html">
+  <meta name="description" content="行内元素的padding、margin的显示效果？之前在开发过程中没有注意这些细节，在面试的时候，面试官有问道该类型的问题，结果因为对细节的不注意导致回答错误，现在特意整理出来。">
+<meta name="keywords" content="css,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[面试总结之css篇] 浅谈行内元素与块元素">
+<meta property="og:url" content="http://yangyiru.github.io/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/index.html">
 <meta property="og:site_name" content="Kamutu Yeung">
-<meta property="og:description" content="一个基于Github和Hexo的静态Blog,期望以一种简单直接、清晰的写作方式分享自己的心得">
+<meta property="og:description" content="行内元素的padding、margin的显示效果？之前在开发过程中没有注意这些细节，在面试的时候，面试官有问道该类型的问题，结果因为对细节的不注意导致回答错误，现在特意整理出来。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yangyiru.github.io/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/1.jpg">
+<meta property="og:image" content="http://yangyiru.github.io/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/2.png">
+<meta property="og:updated_time" content="2018-01-02T07:26:14.562Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kamutu Yeung">
-<meta name="twitter:description" content="一个基于Github和Hexo的静态Blog,期望以一种简单直接、清晰的写作方式分享自己的心得">
+<meta name="twitter:title" content="[面试总结之css篇] 浅谈行内元素与块元素">
+<meta name="twitter:description" content="行内元素的padding、margin的显示效果？之前在开发过程中没有注意这些细节，在面试的时候，面试官有问道该类型的问题，结果因为对细节的不注意导致回答错误，现在特意整理出来。">
+<meta name="twitter:image" content="http://yangyiru.github.io/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Kamutu Yeung" type="application/atom+xml">
   
@@ -151,60 +156,182 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-面试总结之css篇-浅谈行内元素与块元素" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/06/09/angular-深层嵌套ngRepeat中获取radio的值和checkbox的值/" class="archive-article-date">
-  	<time datetime="2016-06-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-09</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/09/angular-深层嵌套ngRepeat中获取radio的值和checkbox的值/">angular 深层嵌套ngRepeat中获取radio的值和checkbox的值</a>
+    <h1 class="article-title" itemprop="name">
+      [面试总结之css篇] 浅谈行内元素与块元素
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/" class="archive-article-date">
+  	<time datetime="2018-01-02T06:28:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>行内元素的padding、margin的显示效果？之前在开发过程中没有注意这些细节，在面试的时候，面试官有问道该类型的问题，结果因为对细节的不注意导致回答错误，现在特意整理出来。<br><a id="more"></a></p>
+<h2 id="行内元素是否具有盒子模型"><a href="#行内元素是否具有盒子模型" class="headerlink" title="行内元素是否具有盒子模型"></a>行内元素是否具有盒子模型</h2><p>  答： 行内元素同样具有盒子模型</p>
+<blockquote>
+<p>小贴士<br>盒子模型： html文档中的每个元素都被描绘成矩形盒子，这些矩形盒子通过一个模型来描述其占用空间，这个模型称为盒模型。盒模型通过四个边界来描述：margin（外边距），border（边框），padding（内边距），content（内容区域）,盒模型是要把元素看成立体的，它确实有空间的属性<br>   <img src="/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/1.jpg" alt="盒子模型"><br>盒模型的类型： 标准盒子模型（元素的width和height = content）、IE盒子模型（元素的width和height =( content+border+padding )）<br>解决跨浏览器方案：<code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</code></p>
+</blockquote>
+<h2 id="行内元素的padding、margin是否无效？"><a href="#行内元素的padding、margin是否无效？" class="headerlink" title="行内元素的padding、margin是否无效？"></a>行内元素的padding、margin是否无效？</h2><p>  答：</p>
+<pre><code>+ 行内元素的padding-top/margin-top/padding-bottom/margin-bottom设置无效
++ 行内元素的padding-left/margin-left/padding-right/margin-right设置有效
++ 行内元素的padding-top/padding-bottom 从显示效果上是增加，但并不会对其他元素产生任何影响
+</code></pre>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">      &lt;head&gt;</span><br><span class="line">	&lt;style&gt;	</span><br><span class="line">	   span&#123;</span><br><span class="line">	   	  padding: <span class="number">112</span>px <span class="number">0</span>;</span><br><span class="line">	   &#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">      &lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;p&gt;深圳赛区区域组委会&lt;/p&gt;</span><br><span class="line">          &lt;span&gt;获取当赛区帮助和赛前指导，&lt;i class="red"&gt;前往免费领取&lt;/i&gt;&lt;/span&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>   结果显示为：<br>   <img src="/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/2.png" alt="结果"></p>
+<p>   观察上面的图,span的padding-top与padding-bottom的值为112px，审查元素的时候是可以看到，但是他并没有对其他元素产生影响<br>   span的左右内边距是产生了效果</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">angular</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yangyiru.github.io/2018/01/02/面试总结之css篇-浅谈行内元素与块元素/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/12/26/面试总结之Iframe的跨域问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">[面试总结之Iframe的跨域问题]</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -227,8 +354,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
